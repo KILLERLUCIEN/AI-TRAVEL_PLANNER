@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TripPilot AI — plan smarter trips with AI.">
+  <title>TripPilot AI — Smart Travel Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="background-orb orb-one"></div>
+  <div class="background-orb orb-two"></div>
+
+  <header class="navbar">
+    <a class="brand" href="/">
+      <span class="brand-icon">✈</span>
+      <span>TripPilot<span class="accent">.AI</span></span>
+    </a>
+    <nav>
+      <a href="#planner">Planner</a>
+      <a href="#explore">Explore</a>
+      <a href="#assistant">AI Assistant</a>
+    </nav>
+    <span class="status-pill" id="statusPill"><span></span> Checking AI</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">✦ PERSONAL AI TRAVEL PLANNER</div>
+        <h1>Your next adventure,<br><span>planned intelligently.</span></h1>
+        <p>Tell TripPilot where you want to go, what you love, and how long you have. Get a personalised itinerary in seconds.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#planner">Plan my trip <span>→</span></a>
+          <a class="text-btn" href="#assistant">Talk to AI</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="mini-map">
+          <div class="route route-a"></div>
+          <div class="route route-b"></div>
+          <span class="pin pin-a">●</span>
+          <span class="pin pin-b">●</span>
+          <span class="pin pin-c">●</span>
+          <div class="map-label">EXPLORE<br><strong>WITHOUT LIMITS</strong></div>
+        </div>
+        <div class="floating-card flight-card">
+          <span>✈</span>
+          <div><small>UP NEXT</small><strong>Tokyo, Japan</strong></div>
+          <b>3h 20m</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="planner-section" id="planner">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">01 / BUILD YOUR TRIP</span>
+          <h2>Where are we going?</h2>
+        </div>
+        <p>Customise the details and let AI handle the planning.</p>
+      </div>
+
+      <form class="planner-form" id="plannerForm">
+        <div class="form-grid">
+          <label class="field field-wide">
+            <span>Destination</span>
+            <div class="input-wrap"><span>⌖</span><input id="destination" required placeholder="e.g. Kyoto, Japan"></div>
+          </label>
+
+          <label class="field">
+            <span>Start date</span>
+            <div class="input-wrap"><span>◷</span><input id="startDate" type="date"></div>
+          </label>
+
+          <label class="field">
+            <span>Trip length</span>
+            <div class="input-wrap"><span>▣</span><input id="days" type="number" min="1" max="30" value="5" required><em>days</em></div>
+          </label>
+
+          <label class="field">
+            <span>Travellers</span>
+            <div class="input-wrap"><span>♙</span><input id="travellers" type="number" min="1" max="20" value="2" required><em>people</em></div>
+          </label>
+
+          <label class="field">
+            <span>Budget</span>
+            <select id="budget">
+              <option>Budget friendly</option>
+              <option selected>Comfortable</option>
+              <option>Premium</option>
+              <option>Luxury</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Travel style</span>
+            <select id="style">
+              <option>Balanced</option>
+              <option>Relaxed</option>
+              <option>Adventure</option>
+              <option>Culture & history</option>
+              <option>Food focused</option>
+              <option>Nature & outdoors</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="interest-row">
+          <span>I'm interested in</span>
+          <div class="chips">
+            <button type="button" class="chip active" data-interest="Landmarks">Landmarks</button>
+            <button type="button" class="chip" data-interest="Food">Food</button>
+            <button type="button" class="chip" data-interest="Culture">Culture</button>
+            <button type="button" class="chip" data-interest="Nature">Nature</button>
+            <button type="button" class="chip" data-interest="Shopping">Shopping</button>
+            <button type="button" class="chip" data-interest="Photography">Photography</button>
+          </div>
+        </div>
+
+        <button class="generate-btn" type="submit"><span id="generateText">Generate my itinerary</span><span id="generateSpinner" class="spinner hidden"></span> <span>✦</span></button>
+      </form>
+    </section>
+
+    <section class="results-section hidden" id="results">
+      <div class="result-header">
+        <div>
+          <span class="eyebrow">02 / YOUR AI ITINERARY</span>
+          <h2 id="resultTitle">Your trip</h2>
+          <p id="resultSummary"></p>
+        </div>
+        <button class="secondary-btn" id="printBtn">Print itinerary</button>
+      </div>
+      <div class="budget-banner"><span>◈</span><div><strong>Budget guidance</strong><p id="resultBudget"></p></div></div>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <section class="explore" id="explore">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">03 / GET INSPIRED</span>
+          <h2>Popular escapes</h2>
+        </div>
+      </div>
+      <div class="destination-grid">
+        <button class="destination-card tokyo" data-destination="Tokyo, Japan"><div><span>ASIA</span><h3>Tokyo</h3><p>Neon nights · ancient traditions</p></div><b>→</b></button>
+        <button class="destination-card paris" data-destination="Paris, France"><div><span>EUROPE</span><h3>Paris</h3><p>Art · food · timeless streets</p></div><b>→</b></button>
+        <button class="destination-card bali" data-destination="Bali, Indonesia"><div><span>ISLAND</span><h3>Bali</h3><p>Temples · beaches · nature</p></div><b>→</b></button>
+      </div>
+    </section>
+
+    <section class="assistant-section" id="assistant">
+      <div class="assistant-intro">
+        <span class="eyebrow">04 / AI TRAVEL ASSISTANT</span>
+        <h2>Ask anything.<br><span>Go anywhere.</span></h2>
+        <p>Your AI companion can help with packing lists, neighbourhood ideas, budgets, food, transport and itinerary changes.</p>
+        <div class="suggestions">
+          <button data-prompt="What should I pack for a 5-day city trip?">🎒 Packing list</button>
+          <button data-prompt="How can I save money while travelling?">💰 Save money</button>
+          <button data-prompt="Give me ideas for local food to try.">🍜 Local food</button>
+        </div>
+      </div>
+
+      <div class="chat-box">
+        <div class="chat-top"><div class="bot-avatar">✦</div><div><strong>TripPilot AI</strong><small id="chatMode">Online</small></div><span class="online-dot"></span></div>
+        <div class="messages" id="messages">
+          <div class="message assistant"><div class="avatar">✦</div><div class="bubble">Hey! I'm TripPilot. Tell me where you're headed or ask me anything about planning your trip. 🌍</div></div>
+        </div>
+        <form class="chat-input" id="chatForm">
+          <input id="chatInput" placeholder="Ask your travel question..." autocomplete="off">
+          <button type="submit" aria-label="Send">↑</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand"><span class="brand-icon">✈</span><span>TripPilot<span class="accent">.AI</span></span></div>
+    <p>Plan smarter. Travel better.</p>
+    <small>AI-generated plans should be verified against current local information.</small>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
